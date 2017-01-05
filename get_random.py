@@ -1,12 +1,17 @@
 import string
 import urllib2
+import numpy.random   # !!! Used only for testing so that we don't have to use our data !!!
 
-MAX_NUM_PER_REQUEST = 10000
+# Constants
+MAX_NUM_PER_REQUEST = 10000     # See "https://www.random.org/clients/http/#integers" for more info
 
+
+# This function requests random numbers from the server but
+# has no protection regarding the number of numbers required.
 def _internal_get_random(num, min, max):
     # Request random numbers
     url = "https://www.random.org/integers/?num="+str(num)+"&min="+str(min)+"&max="+str(max)+"&col=1&base=10&format=plain&rnd=new"
-    # Allow 3 minutes to get the answer. See random.org documentation for more info.
+    # Allow 3 minutes to get the answer. See "https://www.random.org/clients/" for more info.
     response = urllib2.urlopen(url, timeout=360).read()
 
     # Rearange response => array.
@@ -36,6 +41,13 @@ def get_random(num, min, max):
     return random
 
 
+# WARNING: This function should only be used for testing
+# Returns an array of pseudorandom numbers. USED ONLY FOR TESTING.
+# This way, we don't overload the server and acceelerate the dev and testing process.
+def get_random_test(num, min, max):
+    return numpy.random.random_integers(min, max, num)
+
+
 # Returns the current quota
 def check_quota():
     return urllib2.urlopen("https://www.random.org/quota/?format=plain").read()
@@ -44,6 +56,7 @@ def check_quota():
 def main():
     print "Number of requests left: " + str(check_quota())
     print get_random(15, 1, 25)
+
 
 if __name__ == '__main__':
     main()
