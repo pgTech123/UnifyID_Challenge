@@ -18,6 +18,7 @@ def main():
             pix[i, j] = (red, green, blue)
 
     img.show()
+    img.save('random_image.bmp')
 
 
 if __name__ == '__main__':
