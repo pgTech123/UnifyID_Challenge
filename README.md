@@ -10,7 +10,7 @@ python generate_sound.py
 ```
 
 
-To test the module that requires random numbers, run:
+To test the module that request random numbers, run:
 ```bash
 python get_random.py
 ```
